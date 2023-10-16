@@ -92,7 +92,7 @@ test.describe("Dynamic terminal prompts test", () => {
   });
 });
 
-test.only("Bottom icons redirection test", async ({ page }) => {
+test("Bottom icons redirection test", async ({ page }) => {
   //arrange
   const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
 
@@ -118,4 +118,18 @@ test.only("Bottom icons redirection test", async ({ page }) => {
     "https://www.meetup.com/find/?keywords=angular"
   );
   await expect(discordPage).toHaveURL("https://discord.com/invite/angular");
+});
+
+test.only("Github repo redirection test", async ({ page }) => {
+  //arrange
+  const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
+
+  //act
+  await page.goto(baseURL);
+  const githubPagePromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Give our repo a star. Star" }).click();
+  const githubPage = await githubPagePromise;
+
+  //assert
+  await expect(githubPage).toHaveURL("https://github.com/angular/angular");
 });
