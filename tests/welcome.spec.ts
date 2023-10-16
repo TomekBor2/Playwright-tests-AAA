@@ -120,7 +120,7 @@ test("Bottom icons redirection test", async ({ page }) => {
   await expect(discordPage).toHaveURL("https://discord.com/invite/angular");
 });
 
-test.only("Github repo redirection test", async ({ page }) => {
+test("Github repo redirection test", async ({ page }) => {
   //arrange
   const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
 
