@@ -28,7 +28,7 @@ test("Successful related cards routing", async ({ page }) => {
   await expect(devToolsPage).toHaveURL("https://angular.io/guide/devtools");
 });
 
-test.describe.only("Successful dynamic terminal prompts test", () => {
+test.describe("Dynamic terminal prompts test", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("https://angular-qa-recruitment-app.netlify.app/");
   });
@@ -72,4 +72,50 @@ test.describe.only("Successful dynamic terminal prompts test", () => {
     //assert
     await expect(page.locator(".terminal")).toHaveText("ng add _____");
   });
+
+  test("Run and Watch test", async ({ page }) => {
+    //arrange
+    //act
+    await page.getByRole("button", { name: "Run and Watch Tests" }).click();
+
+    //assert
+    await expect(page.locator(".terminal")).toHaveText("ng test");
+  });
+
+  test("Build for Production test", async ({ page }) => {
+    //arrange
+    //act
+    await page.getByRole("button", { name: "Build for Production" }).click();
+
+    //assert
+    await expect(page.locator(".terminal")).toHaveText("ng build");
+  });
+});
+
+test.only("Bottom icons redirection test", async ({ page }) => {
+  //arrange
+  const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
+
+  //act
+  await page.goto(baseURL);
+  const animationsPagePromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Animations" }).click();
+  const animationsPage = await animationsPagePromise;
+  const CLIPagePromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Angular CLI Logo" }).click();
+  const CLIPage = await CLIPagePromise;
+  const meetupPagePromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Meetup Logo" }).click();
+  const meetupPage = await meetupPagePromise;
+  const discordPagePromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Discord Logo" }).click();
+  const discordPage = await discordPagePromise;
+
+  //assert
+  await expect(animationsPage).toHaveURL("https://angular.io/guide/animations");
+  await expect(CLIPage).toHaveURL("https://angular.io/cli");
+  await expect(meetupPage).toHaveURL(
+    "https://www.meetup.com/find/?keywords=angular"
+  );
+  await expect(discordPage).toHaveURL("https://discord.com/invite/angular");
 });
