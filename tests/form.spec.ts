@@ -1,10 +1,15 @@
 import { test, expect } from "@playwright/test";
 
+test.beforeEach(async ({ page }) => {
+  await page.goto("https://angular-qa-recruitment-app.netlify.app/");
+  await page.getByRole("link", { name: "Form" }).click();
+});
+
 test.describe("Form fields validation", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("https://angular-qa-recruitment-app.netlify.app/");
-    await page.getByRole("link", { name: "Form" }).click();
-  });
+  const name = "Tomek";
+  const alterEgo = "Tomo";
+  const tooLongName = "sdfjsdifjsdijsdfoaskoafsdfsfdfdfdfd";
+  const specCharsName = "123./!";
 
   test("Empty name field validation", async ({ page }) => {
     //arrange
@@ -18,7 +23,6 @@ test.describe("Form fields validation", () => {
 
   test("Special chars in name field validation", async ({ page }) => {
     //arrange
-    const specCharsName = "123./!";
 
     //act
     await page.getByLabel("Name").fill(specCharsName);
@@ -31,7 +35,6 @@ test.describe("Form fields validation", () => {
 
   test("Too long name validation", async ({ page }) => {
     //arrange
-    const tooLongName = "sdfjsdifjsdijsdfoaskoafsdfsfdfdfdfd";
 
     //act
     await page.getByLabel("Name").fill(tooLongName);
@@ -64,12 +67,8 @@ test.describe("Form fields validation", () => {
     await expect(page.getByText("Too long Alter Ego")).toBeVisible();
   });
 
-  test("Check if  clicking 'New hero' clears form fields", async ({
-    page,
-  }) => {
+  test("Check if  clicking 'New hero' clears form fields", async ({ page }) => {
     //arrange
-    const name = "Tomek";
-    const alterEgo = "Tomo";
 
     //act
     await page.getByLabel("Name").fill(name);
@@ -82,6 +81,24 @@ test.describe("Form fields validation", () => {
     await expect(page.getByLabel("Alter Ego")).toHaveText("");
     await expect(
       page.locator(".form-control ng-untouched ng-pristine ng-invalid")
+    ).toBeVisible(); //!!!!!!!
+  });
+
+  test("Check if submitted form contains correct data", async ({ page }) => {
+    //arrange
+
+    //act
+    await page.getByLabel("Name").fill(name);
+    await page.getByLabel("Alter Ego").click();
+    await page.getByLabel("Alter Ego").fill(alterEgo);
+    await page.getByLabel("Hero Power").selectOption("Super Flexible");
+    await page.getByRole("button", { name: "Submit" }).click();
+
+    //assert
+    await expect(page.getByText(name)).toBeVisible();
+    await expect(page.getByText(alterEgo)).toBeVisible();
+    await expect(
+      page.locator("div").filter({ hasText: /^Super Flexible$/ })
     ).toBeVisible();
   });
 });
