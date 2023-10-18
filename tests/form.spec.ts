@@ -6,7 +6,7 @@ test.describe("Form fields validation", () => {
     await page.getByRole("link", { name: "Form" }).click();
   });
 
-  test.only("Empty name field validation", async ({ page }) => {
+  test("Empty name field validation", async ({ page }) => {
     //arrange
 
     //act
@@ -64,7 +64,7 @@ test.describe("Form fields validation", () => {
     await expect(page.getByText("Too long Alter Ego")).toBeVisible();
   });
 
-  test.only("Check if  clicking 'New hero' clears form fields", async ({
+  test("Check if  clicking 'New hero' clears form fields", async ({
     page,
   }) => {
     //arrange
@@ -81,7 +81,7 @@ test.describe("Form fields validation", () => {
     await expect(page.getByLabel("Name")).toHaveText("");
     await expect(page.getByLabel("Alter Ego")).toHaveText("");
     await expect(
-      page.locator(".form-control ng-pristine ng-invalid")
+      page.locator(".form-control ng-untouched ng-pristine ng-invalid")
     ).toBeVisible();
   });
 });
