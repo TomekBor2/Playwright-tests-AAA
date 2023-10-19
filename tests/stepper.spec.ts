@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { describe } from "node:test";
 
-describe.only("Stepper fields validation", () => {
+describe("Stepper fields validation", () => {
   const name = "Tomasz";
   const tooLongName = "sdfjsdifjsdijsdfoaskoafsdfsfdfdfdfd";
   const specCharsName = "!;123";
@@ -49,7 +49,7 @@ describe.only("Stepper fields validation", () => {
       .filter({ hasText: /^Name \*$/ })
       .nth(2)
       .click();
-    await page.getByLabel("Name").fill(tooLongName);
+    await page.getByPlaceholder("Last name, First name").fill(tooLongName);
 
     //assert
     await expect(page.getByText("Too long name")).toBeVisible();
@@ -82,17 +82,16 @@ describe.only("Stepper fields validation", () => {
       .click();
     await page.getByPlaceholder("Last name, First name").fill(name);
     // await page.getByRole("button", { name: "Next" }).click();
-    await page
-      .locator("div")
-      .filter({ hasText: /^Next$/ })
-      .click();
+    await page.locator("#cdk-step-content-0-0 > form > div > button").click();
     await page.getByLabel("Address *").fill(wrongMailFormat);
 
     //assert
     await expect(page.getByText("Invalid email format")).toBeVisible();
   });
 
-  test("Check if submitted form contains correct data", async ({ page }) => {
+  test("Check if submitted form contains correct data", async ({
+    page,
+  }) => {
     //arrange
 
     //act
@@ -102,18 +101,13 @@ describe.only("Stepper fields validation", () => {
       .nth(2)
       .click();
     await page.getByPlaceholder("Last name, First name").fill(name);
-    // await page.getByRole("button", { name: "Next" }).click();
-    await page
-      .locator("div")
-      .filter({ hasText: /^Next$/ })
-      .click();
+    await page.locator("#cdk-step-content-0-0 > form > div > button").click();
     await page.getByLabel("Address *").fill(correctEmail);
     await page
       .locator(
-        ".mat-focus-indicator mat-stepper-next mat-button mat-button-base"
+        "xpath=/html/body/app-root/app-stepper/div/mat-stepper/div[2]/div[2]/form/div/button[2]"
       )
-      .click(); //!!!!!!!!!
-    // await page.getByText("Next").click();
+      .click();
 
     //assert
     await expect(page.getByText("You are now done!")).toBeVisible();
@@ -133,13 +127,13 @@ describe.only("Stepper fields validation", () => {
       .nth(2)
       .click();
     await page.getByPlaceholder("Last name, First name").fill(name);
+    await page.locator("#cdk-step-content-0-0 > form > div > button").click();
     await page.getByLabel("Address *").fill(correctEmail);
     await page
       .locator(
-        ".mat-focus-indicator mat-stepper-next mat-button mat-button-base"
+        "xpath=/html/body/app-root/app-stepper/div/mat-stepper/div[2]/div[2]/form/div/button[2]"
       )
-      .click(); //!!!!!!!
-    await page.getByRole("button", { name: "Next" }).click();
+      .click();
     await page.getByRole("button", { name: "Reset" }).click();
 
     //assert
@@ -151,7 +145,7 @@ describe.only("Stepper fields validation", () => {
     ).toBeVisible();
   });
 
-  test.only("Blank spaces trimming test", async ({ page }) => {
+  test("Blank spaces trimming test", async ({ page }) => {
     //arrange
     const blankSpacesName = "  Tomek   ";
     const blankSpacesEmail = "  tomek@gmail.com ";
@@ -168,7 +162,9 @@ describe.only("Stepper fields validation", () => {
       .getByPlaceholder("Ex. 1 Main St, New York, NY")
       .fill(blankSpacesEmail);
     await page.getByRole("button", { name: "Next" }).click();
-    await page.getByText(`Name: Tomek`).click();
-    await page.getByText("Address: tomek@gmail.com").click();
+
+    //assert
+    await expect(page.getByText(`Name: Tomek`)).toBeVisible();
+    await expect(page.getByText("Address: tomek@gmail.com")).toBeVisible();
   });
 });

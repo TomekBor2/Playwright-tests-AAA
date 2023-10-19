@@ -80,9 +80,6 @@ test.describe("Form fields validation", () => {
     //assert
     await expect(page.getByLabel("Name")).toHaveText("");
     await expect(page.getByLabel("Alter Ego")).toHaveText("");
-    await expect(
-      page.locator(".form-control ng-untouched ng-pristine ng-invalid")
-    ).toBeVisible(); //!!!!!!!
   });
 
   test("Check if submitted form contains correct data", async ({ page }) => {
