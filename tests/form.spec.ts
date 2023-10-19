@@ -43,6 +43,7 @@ test.describe("Form fields validation", () => {
     await expect(page.getByText("Too long name")).toBeVisible();
   });
 
+  //moja  iterpretacja //!!!!!!!!!
   test("Special chars in Alter Ego field validation", async ({ page }) => {
     //arrange
     const specCharsAlterEgo = "123./!";

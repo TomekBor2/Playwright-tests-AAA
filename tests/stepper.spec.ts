@@ -158,7 +158,7 @@ describe.only("Stepper fields validation", () => {
 
     await page.getByLabel("Name *").click();
     await page.getByPlaceholder("Last name, First name").fill(blankSpacesName);
-    await page.getByRole("button", { name: "Next" }).click();
+    await page.locator("#cdk-step-content-0-0 > form > div > button").click();
     await page
       .locator("div")
       .filter({ hasText: /^Address \*$/ })

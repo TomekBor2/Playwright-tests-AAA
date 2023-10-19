@@ -7,6 +7,7 @@ test.describe("Welcome screen headers navigation and incorrect URL test", () => 
 
   test("Header navigation", async ({ page }) => {
     // arrange
+
     //act
     await page.getByRole("link", { name: "Form" }).click();
     await page.getByRole("link", { name: "Stepper" }).click();
@@ -19,6 +20,7 @@ test.describe("Welcome screen headers navigation and incorrect URL test", () => 
     await youTubePage.getByRole("button", { name: "Accept all" }).click();
 
     //assert
+    //dodac asercję czy URL dobry
     await expect(twitterPage).toHaveURL("https://twitter.com/angular");
     await expect(youTubePage).toHaveURL("https://www.youtube.com/angular");
   });
