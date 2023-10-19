@@ -92,9 +92,7 @@ describe.only("Stepper fields validation", () => {
     await expect(page.getByText("Invalid email format")).toBeVisible();
   });
 
-  test.only("Check if submitted form contains correct data", async ({
-    page,
-  }) => {
+  test("Check if submitted form contains correct data", async ({ page }) => {
     //arrange
 
     //act
@@ -151,5 +149,26 @@ describe.only("Stepper fields validation", () => {
         .filter({ hasText: /^Name \*$/ })
         .nth(2)
     ).toBeVisible();
+  });
+
+  test.only("Blank spaces trimming test", async ({ page }) => {
+    //arrange
+    const blankSpacesName = "  Tomek   ";
+    const blankSpacesEmail = "  tomek@gmail.com ";
+
+    await page.getByLabel("Name *").click();
+    await page.getByPlaceholder("Last name, First name").fill(blankSpacesName);
+    await page.getByRole("button", { name: "Next" }).click();
+    await page
+      .locator("div")
+      .filter({ hasText: /^Address \*$/ })
+      .nth(2)
+      .click();
+    await page
+      .getByPlaceholder("Ex. 1 Main St, New York, NY")
+      .fill(blankSpacesEmail);
+    await page.getByRole("button", { name: "Next" }).click();
+    await page.getByText(`Name: Tomek`).click();
+    await page.getByText("Address: tomek@gmail.com").click();
   });
 });
