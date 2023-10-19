@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Welcome screen headers navigation and incorrect URL test", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://angular-qa-recruitment-app.netlify.app/");
+    await page.goto("/");
   });
 
   test("Header navigation", async ({ page }) => {
@@ -20,7 +20,6 @@ test.describe("Welcome screen headers navigation and incorrect URL test", () => 
     await youTubePage.getByRole("button", { name: "Accept all" }).click();
 
     //assert
-    //dodac asercję czy URL dobry
     await expect(twitterPage).toHaveURL("https://twitter.com/angular");
     await expect(youTubePage).toHaveURL("https://www.youtube.com/angular");
   });

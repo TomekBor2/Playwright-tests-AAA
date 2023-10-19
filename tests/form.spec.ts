@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("https://angular-qa-recruitment-app.netlify.app/");
+  await page.goto("/");
   await page.getByRole("link", { name: "Form" }).click();
 });
 
@@ -20,6 +20,9 @@ test.describe("Form fields validation", () => {
     //assert
     await expect(page.getByText("Name is required")).toBeVisible();
   });
+
+  //!Wg treści zadania pola formularza powinny być walidowane pod kątem długości i znaków specjalnych. 
+  //!Treści oczekiwanych komunikatów błędów zostały przeze mnie wymyślone.
 
   test("Special chars in name field validation", async ({ page }) => {
     //arrange
@@ -43,7 +46,6 @@ test.describe("Form fields validation", () => {
     await expect(page.getByText("Too long name")).toBeVisible();
   });
 
-  //moja  iterpretacja //!!!!!!!!!
   test("Special chars in Alter Ego field validation", async ({ page }) => {
     //arrange
     const specCharsAlterEgo = "123./!";

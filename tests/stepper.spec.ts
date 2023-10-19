@@ -8,7 +8,7 @@ describe("Stepper fields validation", () => {
   const wrongMailFormat = "tomek.pl";
   const correctEmail = "tomek@gmail.com";
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://angular-qa-recruitment-app.netlify.app/");
+    await page.goto("/");
     await page.getByRole("link", { name: "Stepper" }).click();
   });
 
@@ -22,6 +22,9 @@ describe("Stepper fields validation", () => {
     //assert
     expect(page.getByText("This field is required")).toBeVisible(); //!!!!!!!!!!!!
   });
+
+  //!Wg treści zadania pola steppera powinny być walidowane pod kątem długości i znaków specjalnych.
+  //!Treści oczekiwanych komunikatów błędów zostały przeze mnie wymyślone.
 
   test("Special chars in name field validation", async ({ page }) => {
     //arrange
@@ -89,9 +92,7 @@ describe("Stepper fields validation", () => {
     await expect(page.getByText("Invalid email format")).toBeVisible();
   });
 
-  test("Check if submitted form contains correct data", async ({
-    page,
-  }) => {
+  test("Check if submitted form contains correct data", async ({ page }) => {
     //arrange
 
     //act

@@ -2,10 +2,9 @@ import { test, expect } from "@playwright/test";
 
 test("Successful related cards routing", async ({ page }) => {
   //arrange
-  const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
 
   //act
-  await page.goto(baseURL);
+  await page.goto("/");
 
   const learnPagePromise = page.waitForEvent("popup");
   await page.getByRole("link", { name: "Learn Angular" }).click();
@@ -19,7 +18,7 @@ test("Successful related cards routing", async ({ page }) => {
   const devToolsPagePromise = page.waitForEvent("popup");
   await page.getByRole("link", { name: "Angular DevTools" }).click();
   const devToolsPage = await devToolsPagePromise;
-  await page.goto(baseURL);
+  await page.goto("/");
 
   //assert
   await expect(learnPage).toHaveURL("https://angular.io/tutorial");
@@ -30,7 +29,7 @@ test("Successful related cards routing", async ({ page }) => {
 
 test.describe("Dynamic terminal prompts test", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://angular-qa-recruitment-app.netlify.app/");
+    await page.goto("/");
   });
 
   test("New component test", async ({ page }) => {
@@ -94,10 +93,9 @@ test.describe("Dynamic terminal prompts test", () => {
 
 test("Bottom icons redirection test", async ({ page }) => {
   //arrange
-  const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
 
   //act
-  await page.goto(baseURL);
+  await page.goto("/");
   const animationsPagePromise = page.waitForEvent("popup");
   await page.getByRole("link", { name: "Animations" }).click();
   const animationsPage = await animationsPagePromise;
@@ -122,10 +120,9 @@ test("Bottom icons redirection test", async ({ page }) => {
 
 test("Github repo redirection test", async ({ page }) => {
   //arrange
-  const baseURL = "https://angular-qa-recruitment-app.netlify.app/";
 
   //act
-  await page.goto(baseURL);
+  await page.goto("/");
   const githubPagePromise = page.waitForEvent("popup");
   await page.getByRole("link", { name: "Give our repo a star. Star" }).click();
   const githubPage = await githubPagePromise;
