@@ -1,3 +1,5 @@
+# Testy przygotowane za pomocą frameworka Playwright
+
 # Instrukcja uruchomienia
 
 - Pobieramy repozytorium (np. jako zip)
