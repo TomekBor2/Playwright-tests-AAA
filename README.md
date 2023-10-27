@@ -1,14 +1,14 @@
-# Testy przygotowane za pomocą frameworka Playwright
+# Tests prepared using the Playwright framework as part of a recruitment task
 
-# Instrukcja uruchomienia
+# Launch instructions
 
-- Pobieramy repozytorium (np. jako zip)
-- Rozpakowujemy plik w wybranym katalogu
-- Otwieramy rozpakowany folder w edytorze kodu (np. w VSC)
-- Uruchamiamy w katalogu konsolę
+- Download the repository (e.g. as a zip)
+- Unzip the file in a directory of your choice
+- Open the unzipped folder in a code editor (e.g. in VSC)
+- Launch the console in the directory
 
-  - wykonujemy polecenie `npm install` aby zainstalować zależności
-  - uruchamiamy testy `npx playwright test`
+  - Execute the `npm install` command to install the dependencies
+  - Run `npx playwright test` to run tests.
 
-- Jeśli otrzymasz błąd o nieaktualnych przeglądarkach wykonujemy polecenie:
-  `npx playwright install`
+  - If you get an error about outdated browsers we run the command:  
+    `npx playwright install`.
